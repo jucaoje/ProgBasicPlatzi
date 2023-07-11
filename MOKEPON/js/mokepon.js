@@ -20,13 +20,14 @@ const contenedorAtaques = document.getElementById('contenedorAtaques')
 // let mokepones crea el arreglo(array) mokepones sin informacion
 let mokepones = []
 let ataqueJugador=[]
-let ataqueEnemigo
+let ataqueEnemigo =[]
 let opcionDeMokepones
 let inputhipogoge 
 let inputcapipepo 
 let inputratigueya 
 let mascotaJugador
 let ataquesMokepon
+let ataquesMokeponEnemigo
 let botonFuego
 let botonAgua 
 let botonTierra
@@ -35,9 +36,11 @@ let vidasJugador = 3
 let vidasEnemigo = 3
 
 //class Mokepon crea la clase para la construccion de los objetos del arreglo
-class Mokepon {
+class Mokepon 
+{
     //constructor recibe los atributos del objeto a crear
-    constructor(nombre, foto , vida) {
+    constructor(nombre, foto , vida) 
+    {
         //This declara las variables dentro del objeto
         this.nombre = nombre
         this.foto = foto
@@ -80,10 +83,12 @@ hipodoge.ataques.push(
 //push inserta los valores creados "mokepones" en el arreglo mokepones
 mokepones.push(hipodoge,capipepo,ratigueya)
 
-function iniciarjuego(){
+function iniciarjuego()
+{
     sectionSeleccionarAtaque.style.display = 'none'
     // foreach recorre el arreglo
-    mokepones.forEach((mokepon)=>{
+    mokepones.forEach((mokepon)=>
+     {
         //en la variable opcion de mokepones le cargamos el texto que vamos a ingresar al html
        opcionDeMokepones = `
        <input type="radio" name="Mascota" id=${mokepon.nombre}> 
@@ -98,7 +103,7 @@ function iniciarjuego(){
        inputhipogoge = document.getElementById('Hipodoge')
        inputcapipepo = document.getElementById('Capipepo')
        inputratigueya = document.getElementById('Ratigueya')
-    }
+     }
 
     )
 
@@ -109,23 +114,31 @@ function iniciarjuego(){
     
     botonReiniciar.addEventListener('click', reiniciarJuego)
 }
-function seleccionarmascotajugador(){
+function seleccionarmascotajugador()
+{
     let jugar = 1
     let spanmascotajugador = document.getElementById('mascotajugador')
         
-        if(inputhipogoge.checked) {
+        if(inputhipogoge.checked)
+         {
             spanmascotajugador.innerHTML= inputhipogoge.id
             mascotajugador = inputhipogoge.id
-        }else if(inputcapipepo.checked) {
+         }
+        else if(inputcapipepo.checked)
+        {
             spanmascotajugador.innerHTML= inputcapipepo.id
             mascotajugador = inputcapipepo.id
-        }else if(inputratigueya.checked) {
+        }
+        else if(inputratigueya.checked)
+        {
             spanmascotajugador.innerHTML= inputratigueya.id
             mascotajugador = inputratigueya.id
-        }else{
+        }
+        else
+        {
             alert('Debes seleccionar alguna Opción')
             jugar = 0
-         } 
+        } 
             
         if(jugar == 1){
         extraerAtaques(mascotajugador)  
@@ -137,10 +150,13 @@ function seleccionarmascotajugador(){
     }
          
 }
-function extraerAtaques(mascotaJugador) {
+function extraerAtaques(mascotaJugador)
+ {
     let ataques
-    for (let i = 0; i < mokepones.length; i++) {
-       if (mascotaJugador === mokepones[i].nombre) {
+    for (let i = 0; i < mokepones.length; i++)
+    {
+       if (mascotaJugador === mokepones[i].nombre)
+       {
             ataques = mokepones[i].ataques
             
        }
@@ -149,8 +165,10 @@ function extraerAtaques(mascotaJugador) {
     
     
 }
-function mostrarAtaques(ataques){
-    ataques.forEach((ataque) => {
+function mostrarAtaques(ataques)
+{
+    ataques.forEach((ataque) =>
+    {
         ataquesMokepon = `
         <button id=${ataque.id} class="botonataque Bataque">${ataque.nombre}</button>
         `
@@ -161,14 +179,13 @@ function mostrarAtaques(ataques){
     botonAgua  = document.getElementById('boton-agua')
     botonTierra = document.getElementById('boton-tierra')
     botones= document.querySelectorAll('.Bataque')
-    
-
-
-    
+        
 }
 function secuenciaAtaque(){
-    botones.forEach((boton)=>  {
-        boton.addEventListener('click', (e)=> {
+    botones.forEach((boton)=> 
+     {
+        boton.addEventListener('click', (e)=> 
+        {
             if(e.target.textContent === '🔥' ){
                 ataqueJugador.push('FUEGO')
                 console.log(ataqueJugador)
@@ -181,16 +198,18 @@ function secuenciaAtaque(){
                 ataqueJugador.push('TIERRA')
                 console.log(ataqueJugador)
                 boton.style.background = '#112f58' 
-            }
+            }ataqueAleatorioEnemigo()
             
         })
 
     })
+    
 
 }
 
 //funcion que crea numero aleatorio
-function aleatorio(min, max){
+function aleatorio(min, max)
+{
     return Math.floor(Math.random()*(max - min + 1)+ min)  //Math.floor quita decimales, Math.random crea numero aleatorio
 //este evento busca la vantana html y escucha el evento de cargar html al ejecutar la funcion iniciarjuego
 }
@@ -198,49 +217,55 @@ function seleccionarmascotaenemigo(){
     let mascotaaleatorio = aleatorio(0, mokepones.length -1)
 
     spanmascotaenemigo.innerHTML= mokepones[mascotaaleatorio].nombre
+    ataquesMokeponEnemigo = mokepones[mascotaaleatorio].ataques
     secuenciaAtaque()
         }
 
     
 
-function ataqueenemigo(){
-    let ataqueAleatorioEnemigo = aleatorio(1,3)
-    if (ataqueAleatorioEnemigo == 1){
-        ataqueEnemigo= "FUEGO"
+function ataqueAleatorioEnemigo(){
+    let ataqueAleatorio = aleatorio(0, ataquesMokeponEnemigo.length -1)
+    
+    if (ataqueAleatorio == 0 || ataqueAleatorio== 1){
+        ataqueEnemigo.push("FUEGO")
     }
-    else if (ataqueAleatorioEnemigo == 2){
-        ataqueEnemigo= "AGUA"
+    else if (ataqueAleatorio == 3 || ataqueAleatorio==4){
+        ataqueEnemigo.push("AGUA")
     }
     else {
-        ataqueEnemigo= "TIERRA"
-    } ganador()
-    
-    
-}
-    function ganador(){
+        ataqueEnemigo.push("TIERRA")
+    } console.log(ataqueEnemigo)
+    iniciarPelea()
         
-        if(ataqueJugador == ataqueEnemigo){
+}
+    function iniciarPelea()
+    {
+        if (ataqueJugador.length === 5)
+        {
+         ganador()
+        }
+    }
+    function ganador()
+    {
+        
+        if(ataqueJugador == ataqueEnemigo)
+        {
         crearMensaje("EMPATE")  
         }else if((ataqueJugador == "AGUA" && ataqueEnemigo == "FUEGO") || (ataqueJugador=="TIERRA" && ataqueEnemigo=="AGUA")||(ataqueJugador=="FUEGO" && ataqueEnemigo=="TIERRA")){
             crearMensaje("GANASTE")  
             vidasEnemigo--
             spanVidasEnemigo.innerHTML=vidasEnemigo
         }
-        // else if(ataqueJugador=="TIERRA" && ataqueEnemigo=="AGUA"){
-        //     crearMensaje("GANASTE")
-        // }
-        // else if(ataqueJugador=="FUEGO" && ataqueEnemigo=="TIERRA"){
-        //     crearMensaje("GANASTE")
-        // //triunfos= triunfos + 1
-        // }
+       
         else{
              crearMensaje("PERDISTE")
             vidasJugador--
             spanVidasjugador.innerHTML=vidasJugador
-         } revisarVidas()
+            } revisarVidas()
     } 
 
-    function revisarVidas(){
+    function revisarVidas()
+    {
         if (vidasEnemigo == 0){
             crearMensajeFinal('Felicitaciones !! GANASTE')
         } else if(vidasJugador == 0){
@@ -248,25 +273,22 @@ function ataqueenemigo(){
         }
     }
 
-function crearMensaje(resultado){
-   
-    
+function crearMensaje(resultado)
+{
     let nuevoAtaqueDelJugador = document.createElement('p')
     let nuevoAtaqueDelEnemigo = document.createElement('p')
 
     sectionmensaje.innerHTML = resultado
     nuevoAtaqueDelJugador.innerHTML = ataqueJugador
     nuevoAtaqueDelEnemigo.innerHTML = ataqueEnemigo
-    // let parrafo = document.createElement('p')
-    // parrafo.innerHTML= `Tu mascota  ataco con ${ataqueJugador} y la mascota enemigo ataco con ${ataqueEnemigo} el resultado es ${resultado}` 
     
     ataquesDelJugador.appendChild( nuevoAtaqueDelJugador)
     ataquesDelEnemigo.appendChild(nuevoAtaqueDelEnemigo)
 }
-function crearMensajeFinal(resultadoFinal){
+function crearMensajeFinal(resultadoFinal)
+{
    
     sectionmensaje.innerHTML= resultadoFinal
-  
     
     botonFuego.disabled = true
     
@@ -277,7 +299,8 @@ function crearMensajeFinal(resultadoFinal){
     sectionReiniciarJuego.style.display = 'block'
      
 }
-function reiniciarJuego(){
+function reiniciarJuego()
+{
     location.reload()
 }
     
