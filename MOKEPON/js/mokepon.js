@@ -19,7 +19,7 @@ const contenedorTarjetas = document.getElementById('contenedorTarjetas') //le as
 const contenedorAtaques = document.getElementById('contenedorAtaques')
 // let mokepones crea el arreglo(array) mokepones sin informacion
 let mokepones = []
-let ataqueJugador
+let ataqueJugador=[]
 let ataqueEnemigo
 let opcionDeMokepones
 let inputhipogoge 
@@ -30,6 +30,7 @@ let ataquesMokepon
 let botonFuego
 let botonAgua 
 let botonTierra
+let botones=[]
 let vidasJugador = 3
 let vidasEnemigo = 3
 
@@ -151,7 +152,7 @@ function extraerAtaques(mascotaJugador) {
 function mostrarAtaques(ataques){
     ataques.forEach((ataque) => {
         ataquesMokepon = `
-        <button id=${ataque.id} class="botonataque">${ataque.nombre}</button>
+        <button id=${ataque.id} class="botonataque Bataque">${ataque.nombre}</button>
         `
         contenedorAtaques.innerHTML += ataquesMokepon
     }
@@ -159,10 +160,35 @@ function mostrarAtaques(ataques){
     botonFuego = document.getElementById('boton-fuego')
     botonAgua  = document.getElementById('boton-agua')
     botonTierra = document.getElementById('boton-tierra')
-    botonFuego.addEventListener('click', ataquefuego)
-    botonAgua.addEventListener('click', ataqueagua)
-    botonTierra.addEventListener('click', ataquetierra)
+    botones= document.querySelectorAll('.Bataque')
+    
+
+
+    
 }
+function secuenciaAtaque(){
+    botones.forEach((boton)=>  {
+        boton.addEventListener('click', (e)=> {
+            if(e.target.textContent === '🔥' ){
+                ataqueJugador.push('FUEGO')
+                console.log(ataqueJugador)
+                boton.style.background = '#112f58'
+            }else if (e.target.textContent === '💧'){
+                ataqueJugador.push('AGUA')
+                console.log(ataqueJugador)
+                boton.style.background = '#112f58'
+            } else {
+                ataqueJugador.push('TIERRA')
+                console.log(ataqueJugador)
+                boton.style.background = '#112f58' 
+            }
+            
+        })
+
+    })
+
+}
+
 //funcion que crea numero aleatorio
 function aleatorio(min, max){
     return Math.floor(Math.random()*(max - min + 1)+ min)  //Math.floor quita decimales, Math.random crea numero aleatorio
@@ -172,19 +198,10 @@ function seleccionarmascotaenemigo(){
     let mascotaaleatorio = aleatorio(0, mokepones.length -1)
 
     spanmascotaenemigo.innerHTML= mokepones[mascotaaleatorio].nombre
+    secuenciaAtaque()
         }
-function ataquefuego(){
-    ataqueJugador = "FUEGO"
-    ataqueenemigo ()
-}
-function ataqueagua(){
-    ataqueJugador = "AGUA"
-    ataqueenemigo ()
-}
-function ataquetierra(){
-    ataqueJugador = "TIERRA"
-    ataqueenemigo ()
-}
+
+    
 
 function ataqueenemigo(){
     let ataqueAleatorioEnemigo = aleatorio(1,3)
